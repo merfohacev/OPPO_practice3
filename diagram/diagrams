@@ -1,0 +1,27 @@
+@startuml
+
+class Date {
+  - day: int
+  - month: int
+  - year: int
+
+  + Date()
+}
+
+class Planet {
+  - name: string
+  - date: Date
+  - radius: double
+
+  + Planet()
+}
+
+Date -- Planet
+
+Date --|> std::istream
+Date --|> std::ostream
+
+Planet --|> std::istream
+Planet --|> std::ostream
+
+@enduml
