@@ -18,10 +18,4 @@ class Planet {
 
 Date -- Planet
 
-Date --|> std::istream
-Date --|> std::ostream
-
-Planet --|> std::istream
-Planet --|> std::ostream
-
 @enduml
