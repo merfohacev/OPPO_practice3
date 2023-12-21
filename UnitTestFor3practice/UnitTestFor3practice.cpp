@@ -57,8 +57,37 @@ public:
         Assert::AreEqual(planet.radius, 3389.5);
         Assert::AreEqual(planet.date.year, 2023);
         Assert::AreEqual(planet.date.month, 12);
-        Assert::AreEqual(planet.date.day, 21);
+        Assert::AreEqual(planet.date.day, 21);  
     }
+
+    TEST_METHOD(ValidPlanetName)
+    {
+        Planet planet;
+        planet.name = "Earth";
+        Assert::AreEqual("Earth", planet.name.c_str());
+    }
+
+    TEST_METHOD(InvalidPlanetName)
+    {
+        Planet planet;
+        planet.name = "";
+        Assert::AreNotEqual("Earth", planet.name.c_str());
+    }
+
+    TEST_METHOD(ValidPlanetRadius)
+    {
+        Planet planet;
+        planet.radius = 6371.0; 
+        Assert::AreEqual(6371.0, planet.radius);
+    }
+
+    TEST_METHOD(InvalidPlanetRadius)
+    {
+        Planet planet;
+        planet.radius = -100.0;
+        Assert::AreNotEqual(6371.0, planet.radius);
+    }
+
     };
 
     TEST_CLASS(DateTest) {
@@ -102,6 +131,40 @@ public:
         ss >> date;
 
         Assert::AreNotEqual(date.day, 29);
+    }
+
+    TEST_METHOD(InvalidDayInMonth)
+    {
+        Date date;
+        date.year = 2023;
+        date.month = 4; 
+        date.day = 31;   
+        Assert::ExpectException<std::invalid_argument>([&]() { throw std::invalid_argument("Invalid day for April"); });
+    }
+
+    TEST_METHOD(InvalidMonth)
+    {
+        Date date;
+        date.year = 2023;
+        date.month = 13; 
+        Assert::ExpectException<std::invalid_argument>([&]() { throw std::invalid_argument("Invalid month"); });
+    }
+
+    TEST_METHOD(InvalidYear)
+    {
+        Date date;
+        date.year = -100;  
+        Assert::ExpectException<std::invalid_argument>([&]() { throw std::invalid_argument("Invalid year"); });
+
+        date.year = 10000; 
+        Assert::ExpectException<std::invalid_argument>([&]() { throw std::invalid_argument("Invalid year"); });
+    }
+
+    TEST_METHOD(InvalidDateFormat)
+    {
+        Date date;
+        std::istringstream iss("2023-04-31");  
+        Assert::ExpectException<std::invalid_argument>([&]() { iss >> date; });
     }
     };
 }
