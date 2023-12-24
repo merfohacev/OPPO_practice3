@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#define _CRTDBG_MAP_ALLOC
+#include <iostream>
 #include <fstream>
 #include <string>
 #include "date.h"
@@ -9,6 +10,9 @@
 using namespace std;
 
 int main() {
+    // Включаем утечки памяти
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
     setlocale(LC_ALL, "Ru");
     string path = "test.txt";
     ifstream fs;
@@ -27,6 +31,9 @@ int main() {
     catch (const exception& e) {
         cerr << "Exception caught: " << e.what() << endl;
     }
+
+    // Выводим информацию об утечках памяти
+    _CrtDumpMemoryLeaks();
 
     return 0;
 }

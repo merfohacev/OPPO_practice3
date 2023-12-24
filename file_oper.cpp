@@ -2,10 +2,13 @@
 #include <iostream>
 
 void reader(ifstream& ist, vector<Planet>& planetVector) {
-    while (!ist.eof()) {
-        Planet planet;
-        ist >> planet;
+    Planet planet;
+    while (ist >> planet) {
         planetVector.push_back(planet);
+    }
+
+    if (!ist.eof() && ist.fail()) {
+        cerr << "Error reading from the input stream." << endl;
     }
 }
 
