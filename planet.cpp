@@ -22,7 +22,6 @@ istream& operator>>(istream& is, Planet& planet) {
         is >> planet.radius;
     }
     catch (const std::exception& e) {
-        // Обработка ошибок чтения данных
         std::cerr << "Error while reading Planet data: " << e.what() << std::endl;
     }
 
